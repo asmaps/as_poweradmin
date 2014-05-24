@@ -1,0 +1,6 @@
+Django
+ipython
+django-extensions
+django-braces
+django-model-utils
+South

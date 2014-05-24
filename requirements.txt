@@ -1,0 +1,9 @@
+# This file is here because many Platforms as a Service look for
+#	requirements.txt in the root directory of a project.
+Django
+ipython
+django-extensions
+django-braces
+django-model-utils
+South
+gunicorn
