@@ -23,17 +23,26 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 ########## DATABASE CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+    'default': {    # Used by all apps of the Django project except django-powerdns-manager
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'as_poweradmin',               # Or path to database file if using sqlite3.
+        'USER': 'as_poweradmin',                      # Not used with sqlite3.
+        'PASSWORD': get_env_setting('DB_PASS'),                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    },
+    'powerdns': {    # Used by django-powerdns-manager and PowerDNS server
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'pdns',           # Or path to database file if using sqlite3.
+        'USER': 'as_poweradmin',                      # Not used with sqlite3.
+        'PASSWORD': get_env_setting('DB_PASS'),                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+DATABASE_ROUTERS = ['powerdns_manager.routers.PowerdnsManagerDbRouter']
 ########## END DATABASE CONFIGURATION
 
 

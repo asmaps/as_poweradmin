@@ -1,0 +1,54 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load crispy_forms_tags %}
+{% load url from future %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 text-center">
+      <h1>{% trans "Log In" %}</h1>
+
+      {% if socialaccount.providers %}
+        <p>
+          {% blocktrans with site.name as site_name %}Please sign in with one
+          of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+          for a {{ site_name }} account and sign in below:{% endblocktrans %}
+        </p>
+
+        <div class="socialaccount_ballot">
+
+          <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          </ul>
+
+          <div class="login-or">{% trans 'or' %}</div>
+
+        </div>
+
+        {% include "socialaccount/snippets/login_extra.html" %}
+
+      {% endif %}
+
+      <form class="text-left" method="POST" action="{% url 'account_login' %}">
+        {% crispy form crispy_helper %}
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <div class="clearfix">
+          <a class="btn btn-default pull-left" href="{% url 'account_reset_password' %}">{% trans "Forgot your password?" %}</a>
+          <button class="btn btn-primary pull-right" type="submit">{% trans "Log in" %}</button>
+        </div>
+      </form>
+
+      <hr>
+
+      <p>
+        Don't have an account? <a href="{{ signup_url }}">Create account</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

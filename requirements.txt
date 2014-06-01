@@ -1,9 +1,14 @@
 # This file is here because many Platforms as a Service look for
 #	requirements.txt in the root directory of a project.
-Django
+Django<1.7
 ipython
 django-extensions
 django-braces
 django-model-utils
 South
 gunicorn
+-e git+https://github.com/asmaps/django-powerdns-manager.git#egg=django-powerdns-manager
+psycopg2
+dnspython
+django-crispy-forms
+django-allauth

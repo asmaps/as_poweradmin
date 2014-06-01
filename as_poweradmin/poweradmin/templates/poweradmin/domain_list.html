@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table>
+    {% for domain in domain_list %}
+    <tr>
+        <td>{{ domain.name }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

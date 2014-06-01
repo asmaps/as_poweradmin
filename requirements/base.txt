@@ -1,6 +1,11 @@
-Django
+Django<1.7
 ipython
 django-extensions
 django-braces
 django-model-utils
 South
+django-powerdns-manager==0.1.35a1
+psycopg2
+dnspython
+django-crispy-forms
+django-allauth

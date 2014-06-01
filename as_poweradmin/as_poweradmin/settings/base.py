@@ -2,8 +2,19 @@
 
 
 from os.path import abspath, basename, dirname, join, normpath
+from os import environ
 from sys import path
 
+from django.core.exceptions import ImproperlyConfigured
+
+
+def get_env_setting(setting):
+    """ Get the environment setting or return exception """
+    try:
+        return environ[setting]
+    except KeyError:
+        error_msg = "Set the %s env variable" % setting
+        raise ImproperlyConfigured(error_msg)
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -14,6 +25,8 @@ SITE_ROOT = dirname(DJANGO_ROOT)
 
 # Site name:
 SITE_NAME = basename(DJANGO_ROOT)
+
+LOGIN_REDIRECT_URL = 'home'
 
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
@@ -139,6 +152,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -191,10 +211,17 @@ DJANGO_APPS = (
     'django.contrib.admin',
     # 'django.contrib.admindocs',
     'django_extensions',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'crispy_forms',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'powerdns_manager',
+    'poweradmin',
+    'main',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -250,3 +277,44 @@ INSTALLED_APPS += (
 # Don't need to use South when setting up a test database.
 SOUTH_TESTS_MIGRATE = False
 ########## END SOUTH CONFIGURATION
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+########## ALLAUTH
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_USERNAME_REQUIRED = False
+from main.utils import get_user_display
+ACCOUNT_USER_DISPLAY = get_user_display
+########## END ALLAUTH
+
+###### powerdns settings
+PDNS_DEFAULT_ZONE_TYPE = 'MASTER'
+PDNS_DEFAULT_RR_TTL = 3600
+PDNS_ALLOW_WILDCARD_NAMES = True
+PDNS_ENABLED_RR_TYPES = [
+    'SOA',
+    'NS',
+    'MX',
+    'A',
+    'AAAA',
+    'CNAME',
+    'PTR',
+    'TXT',
+    'SPF',
+    'SRV',
+    'CERT',
+    'DNSKEY',
+    'DS',
+    'KEY',
+    'NSEC',
+    'RRSIG',
+    'HINFO',
+    'LOC',
+    'NAPTR',
+    'RP',
+    'AFSDB',
+    'SSHFP',
+]
