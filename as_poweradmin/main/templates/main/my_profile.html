@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
+{% load main_tags %}
 
 {% block content %}
-<h1>My Profile</h1>
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <a href="{% url 'my_profile_update' %}" class="pull-right btn btn-default"><i class="fa fa-pencil-square-o"></i> Update</a>
+        <h1>My Profile</h1>
+        <table class="table table-striped">
+            <colgroup>
+                <col class="col-sm-2 col-xs-3">
+                <col class="col-xs-8">
+            </colgroup>
+            {% render_instance_to_tr request.user 'first_name' 'last_name' 'email' %}
+        </table>
+    </div>
+</div>
 {% endblock %}

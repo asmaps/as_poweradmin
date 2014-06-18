@@ -159,6 +159,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -215,6 +216,7 @@ DJANGO_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
+    'guardian',
 )
 
 # Apps specific for this project go here.
@@ -280,8 +282,10 @@ SOUTH_TESTS_MIGRATE = False
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+ANONYMOUS_USER_ID = None
+
 ########## ALLAUTH
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
@@ -289,6 +293,15 @@ ACCOUNT_USERNAME_REQUIRED = False
 from main.utils import get_user_display
 ACCOUNT_USER_DISPLAY = get_user_display
 ########## END ALLAUTH
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
 
 ###### powerdns settings
 PDNS_DEFAULT_ZONE_TYPE = 'MASTER'

@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table>
+<h1>My Domains</h1>
+<table class="table table-striped">
+    <tr>
+        <th class="text-center">Show</th>
+        <th>Domain Name</th>
+        <th class="text-center">Number of records</th>
+    </tr>
     {% for domain in domain_list %}
     <tr>
-        <td>{{ domain.name }}</td>
+        <td class="text-center"><a href="{% url 'domain_detail' pk=domain.pk %}"><i class="fa fa-search"></i></a></td>
+        <td><a href="{% url 'domain_detail' pk=domain.pk %}">{{ domain.name }}</a></td>
+        <td class="text-center">{{ domain.powerdns_manager_record_domain.count }}</td>
     </tr>
     {% endfor %}
 </table>

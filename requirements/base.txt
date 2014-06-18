@@ -9,3 +9,4 @@ psycopg2
 dnspython
 django-crispy-forms
 django-allauth
+django-guardian

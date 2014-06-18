@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <h1>Delete record?</h1>
+        <div class="alert alert-danger">
+            Do you really want to delete the record "{{ record.name }}"? This action is irreversible!
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <a href="{% url 'record_update' pk=record.pk %}" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-danger pull-right">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

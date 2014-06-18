@@ -1,0 +1,15 @@
+{
+    "data": [
+    {% for record in record_list %}
+    [
+        "<a href=\"{% url 'record_update' pk=record.pk %}\"><i class=\"fa fa-pencil\"></i></a>",
+        "{{ record.name }}",
+        "{{ record.type }}",
+        "{{ record.content }}",
+        "{{ record.ttl }}",
+        "{{ record.prio|default:'-' }}",
+        "<a href=\"{% url 'record_delete' pk=record.pk %}\"><i class=\"fa fa-trash-o\"></i></a>"
+            ]{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    ]
+}

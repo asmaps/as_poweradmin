@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Home</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Home</h1>
+        {% if not request.user.customerprofile %}
+        <div class="alert alert-danger">
+            Please <a href="{% url 'my_profile_update' %}" class="alert-link">update your profile information</a>!
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,40 @@
+<div class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'home' %}">AS Webservices Dashboard</a>
+    </div>
+    <div class="collapse navbar-collapse">
+        {% if request.user.is_authenticated %}
+        <ul class="nav navbar-nav">
+            <li{{ nav_home|yesno:' class=active,' }}><a href="{% url 'home' %}"><i class="fa fa-home fa-fw"></i> Home</a></li>
+            <li{{ nav_domains|yesno:' class=active,' }}><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-code fa-fw"></i> Domains <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'domain_list' %}"><i class="fa fa-list fa-fw"></i> My Domains</a></li>
+        </ul>
+            </li>
+        </ul>
+        {% endif %}
+        <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
+            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ request.user.email }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                {% if request.user.is_staff %}
+                <li><a href="{% url 'admin:index' %}"><i class="fa fa-cog fa-fw"></i> Admin</a></li>
+                {% endif %}
+                <li><a href="{% url 'my_profile' %}"><i class="fa fa-sliders fa-fw"></i> My Profile</a></li>
+                <li><a href="{% url 'account_change_password' %}"><i class="fa fa-shield fa-fw"></i> Change password</a></li>
+                <li><a href="{% url 'account_logout' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+            </ul>
+            </li>
+            {% else %}
+            <li><a href="{% url 'account_login' %}"><i class="fa fa-sign-in fa-fw"></i> Login</a></li>
+            <li><a href="{% url 'account_signup' %}"><i class="fa fa-paper-plane fa-fw"></i> Sign up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+

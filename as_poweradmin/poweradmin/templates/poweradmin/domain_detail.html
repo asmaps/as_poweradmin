@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Records for "{{ domain.name }}"</h1>
+<table class="table table-striped" id="recordstable">
+    <thead>
+        <tr>
+            <th class="text-center">Edit</th>
+            <th>Name</th>
+            <th class="text-center">Type</th>
+            <th>Content</th>
+            <th class="text-center">TTL</th>
+            <th class="text-center">Prio</th>
+            <th class="text-center">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+$(document).ready( function () {
+        $('#recordstable').DataTable(
+            {
+ajax: "{% url 'record_list_json' pk=domain.pk %}",
+"aoColumns": [
+{"sClass": "text-center"},
+null,
+{"sClass": "text-center"},
+null,
+{"sClass": "text-center"},
+{"sClass": "text-center"},
+{"sClass": "text-center"}
+]}
+);
+        } );
+</script>
+{% endblock %}
+
